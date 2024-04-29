@@ -7,10 +7,10 @@ Requirements:
 * skikit-learn: 1.4.2
 * tqdm: 4.66.2
 
-GPU is required. You can download the CUDA toolkit from [here]([url](https://developer.nvidia.com/cuda-toolkit)). We used NVIDIA CUDA 12.1
+GPU is required. You can download the CUDA toolkit from [here](https://developer.nvidia.com/cuda-toolkit). We used NVIDIA CUDA 12.1
 
 Step 1:
-Download BERT-Base (Google's pre-trained models) and then convert a tensorflow checkpoint to a pytorch model.
+Download BERT-Base [(Google's pre-trained models)](https://github.com/google-research/bert)) and then convert a tensorflow checkpoint to a pytorch model.
 
 ```
 python convert_tf_checkpoint_to_pytorch.py \
