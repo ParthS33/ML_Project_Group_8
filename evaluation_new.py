@@ -384,14 +384,6 @@ def semeval_Acc(y_true, y_pred, score, classes=4):
 
 def main():
     parser = argparse.ArgumentParser()
-    # parser.add_argument("--task_name",
-    #                     default=None,
-    #                     type=str,
-    #                     required=True,
-    #                     choices=["sentihood_single", "sentihood_NLI_M", "sentihood_QA_M", \
-    #                             "sentihood_NLI_B", "sentihood_QA_B", "semeval_single", \
-    #                             "semeval_NLI_M", "semeval_QA_M", "semeval_NLI_B", "semeval_QA_B"],
-    #                     help="The name of the task to evalution.")
     parser.add_argument("--pred_data_dir",
                         default=None,
                         type=str,
@@ -415,7 +407,6 @@ def main():
 
 
     for i in range(len(list_of_files)):
-        print(list_of_files[i])
         test_name = list_of_files[i].split("/")[-2]
         if task_name_list[i] in ["sentihood_single", "sentihood_NLI_M", "sentihood_QA_M", "sentihood_NLI_B", "sentihood_QA_B"]:
             y_true = get_y_true(task_name_list[i])
