@@ -30,3 +30,15 @@ You can change the hyperparameters and tasks in the above script
 If you want to use the scripts that we have used, then check out the Script.txt
 
 # Step 3: Evaluation
+Evaluation is performed on the test dataset
+
+To evaulate all the models run the below code
+```
+python evaluation.py --pred_data_dir results/sentihood
+```
+
+To evaluate a particular model replace the path to the test epoch of the model
+Example:
+```
+python evaluation.py --pred_data_dir results/sentihood/NLI_B_128_20_2e-05_4.0_1_1/test_ep_4.txt
+```
