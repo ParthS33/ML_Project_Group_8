@@ -243,10 +243,10 @@ def sentihood_AUC_Acc(y_true, score):
     Calculate "Acc" of sentiment classification task of Sentihood.
     """
     # aspect-Macro-AUC
-    aspect_y_true=[]
-    aspect_y_score=[]
-    aspect_y_trues=[[],[],[],[]]
-    aspect_y_scores=[[],[],[],[]]
+    aspect_y_true=[] # Aspect true labels
+    aspect_y_score=[] # Aspect predicted scores
+    aspect_y_trues=[[],[],[],[]] # Aspect true labels for each aspect
+    aspect_y_scores=[[],[],[],[]] # Aspect predicted scores for each aspect
     for i in range(len(y_true)):
         if y_true[i]>0:
             aspect_y_true.append(0)
@@ -263,24 +263,25 @@ def sentihood_AUC_Acc(y_true, score):
     aspect_Macro_AUC = np.mean(aspect_auc)
     # aspect_Macro_AUC = None
     # sentiment-Macro-AUC
-    sentiment_y_true=[]
-    sentiment_y_pred=[]
-    sentiment_y_score=[]
-    sentiment_y_trues=[[],[],[],[]]
-    sentiment_y_scores=[[],[],[],[]]
+    sentiment_y_true=[] # Sentiment true labels
+    sentiment_y_pred=[] # Sentiment predicted labels
+    sentiment_y_score=[] # Sentiment predicted scores
+    sentiment_y_trues=[[],[],[],[]] # Sentiment true labels for each aspect
+    sentiment_y_scores=[[],[],[],[]] # Sentiment predicted scores for each aspect
+
     for i in range(len(y_true)):
-        if y_true[i]>0:
+        if y_true[i] > 0:
             sentiment_y_true.append(y_true[i]-1) # "Postive":0, "Negative":1
-            tmp_score=score[i][2]/(score[i][1]+score[i][2])  # probability of "Negative"
+            tmp_score = score[i][2]/(score[i][1]+score[i][2])  # probability of "Negative"
             sentiment_y_score.append(tmp_score)
-            if tmp_score>0.5:
+            if tmp_score > 0.5:
                 sentiment_y_pred.append(1) # "Negative": 1
             else:
                 sentiment_y_pred.append(0)
-            sentiment_y_trues[i%4].append(sentiment_y_true[-1])
-            sentiment_y_scores[i%4].append(sentiment_y_score[-1])
+            sentiment_y_trues[i % 4].append(sentiment_y_true[-1])
+            sentiment_y_scores[i % 4].append(sentiment_y_score[-1])
 
-    sentiment_auc=[]
+    sentiment_auc = []
     for i in range(4):
         sentiment_auc.append(metrics.roc_auc_score(sentiment_y_trues[i], sentiment_y_scores[i]))
     sentiment_Macro_AUC = np.mean(sentiment_auc)
@@ -293,96 +294,111 @@ def sentihood_AUC_Acc(y_true, score):
     return aspect_Macro_AUC, sentiment_Acc, sentiment_Macro_AUC
 
 
-def semeval_PRF(y_true, y_pred):
-    """
-    Calculate "Micro P R F" of aspect detection task of SemEval-2014.
-    """
-    s_all=0
-    g_all=0
-    s_g_all=0
-    for i in range(len(y_pred)//5):
-        s=set()
-        g=set()
-        for j in range(5):
-            if y_pred[i*5+j]!=4:
-                s.add(j)
-            if y_true[i*5+j]!=4:
-                g.add(j)
-        if len(g)==0:continue
-        s_g=s.intersection(g)
-        s_all+=len(s)
-        g_all+=len(g)
-        s_g_all+=len(s_g)
-
-    p=s_g_all/s_all
-    r=s_g_all/g_all
-    f=2*p*r/(p+r)
-
-    return p,r,f
+# def semeval_PRF(y_true, y_pred):
+#     """
+#     Calculate "Micro P R F" of aspect detection task of SemEval-2014.
+#     """
+#     s_all=0
+#     g_all=0
+#     s_g_all=0
+#     for i in range(len(y_pred)//5):
+#         s=set()
+#         g=set()
+#         for j in range(5):
+#             if y_pred[i*5+j]!=4:
+#                 s.add(j)
+#             if y_true[i*5+j]!=4:
+#                 g.add(j)
+#         if len(g)==0:continue
+#         s_g=s.intersection(g)
+#         s_all+=len(s)
+#         g_all+=len(g)
+#         s_g_all+=len(s_g)
+#
+#     p=s_g_all/s_all
+#     r=s_g_all/g_all
+#     f=2*p*r/(p+r)
+#
+#     return p,r,f
 
 
 def semeval_Acc(y_true, y_pred, score, classes=4):
     """
     Calculate "Acc" of sentiment classification task of SemEval-2014.
     """
+    # Check if the number of classes is valid
     assert classes in [2, 3, 4], "classes must be 2 or 3 or 4."
 
+    # Calculate accuracy based on the number of classes
     if classes == 4:
-        total=0
-        total_right=0
+        # Initialize variables to compute accuracy
+        total = 0
+        total_right = 0
         for i in range(len(y_true)):
-            if y_true[i]==4:continue
-            total+=1
-            tmp=y_pred[i]
-            if tmp==4:
-                if score[i][0]>=score[i][1] and score[i][0]>=score[i][2] and score[i][0]>=score[i][3]:
-                    tmp=0
-                elif score[i][1]>=score[i][0] and score[i][1]>=score[i][2] and score[i][1]>=score[i][3]:
-                    tmp=1
-                elif score[i][2]>=score[i][0] and score[i][2]>=score[i][1] and score[i][2]>=score[i][3]:
-                    tmp=2
+            if y_true[i] == 4:
+                continue
+            total += 1
+            tmp = y_pred[i]
+            # Adjust prediction if it equals 4 (None class)
+            if tmp == 4:
+                if score[i][0] >= score[i][1] and score[i][0] >= score[i][2] and score[i][0] >= score[i][3]:
+                    tmp = 0
+                elif score[i][1] >= score[i][0] and score[i][1] >= score[i][2] and score[i][1] >= score[i][3]:
+                    tmp = 1
+                elif score[i][2] >= score[i][0] and score[i][2] >= score[i][1] and score[i][2] >= score[i][3]:
+                    tmp = 2
                 else:
                     tmp=3
-            if y_true[i]==tmp:
-                total_right+=1
+            # Check if prediction matches the true label
+            if y_true[i] == tmp:
+                total_right += 1
+        #  Calculate accuracy
         sentiment_Acc = total_right/total
     elif classes == 3:
-        total=0
-        total_right=0
+        total = 0
+        total_right = 0
         for i in range(len(y_true)):
-            if y_true[i]>=3:continue
-            total+=1
-            tmp=y_pred[i]
-            if tmp>=3:
-                if score[i][0]>=score[i][1] and score[i][0]>=score[i][2]:
-                    tmp=0
-                elif score[i][1]>=score[i][0] and score[i][1]>=score[i][2]:
-                    tmp=1
+            if y_true[i] >=3 :
+                continue
+            total += 1
+            tmp = y_pred[i]
+            # Adjust prediction if it equals 3 (conflict class)
+            if tmp >= 3:
+                if score[i][0] >= score[i][1] and score[i][0] >= score[i][2]:
+                    tmp = 0
+                elif score[i][1] >= score[i][0] and score[i][1] >= score[i][2]:
+                    tmp = 1
                 else:
-                    tmp=2
-            if y_true[i]==tmp:
-                total_right+=1
+                    tmp = 2
+            if y_true[i] == tmp:
+                total_right += 1
         sentiment_Acc = total_right/total
     else:
         total=0
         total_right=0
         for i in range(len(y_true)):
-            if y_true[i]>=3 or y_true[i]==1:continue
-            total+=1
-            tmp=y_pred[i]
-            if tmp>=3 or tmp==1:
-                if score[i][0]>=score[i][2]:
-                    tmp=0
+            if y_true[i] >= 3 or y_true[i] == 1:continue
+            total += 1
+            tmp = y_pred[i]
+            # Adjust prediction if it equals 3 (conflict class) or 1 (neutral class)
+            if tmp >= 3 or tmp == 1:
+                if score[i][0] >= score[i][2]:
+                    tmp = 0
                 else:
-                    tmp=2
-            if y_true[i]==tmp:
-                total_right+=1
+                    tmp = 2
+            # Check if prediction matches the true label
+            if y_true[i] == tmp:
+                total_right += 1
+        # Calculate accuracy
         sentiment_Acc = total_right/total
 
     return sentiment_Acc
 
 
 def main():
+    # Define the main function to execute the evaluation process
+
+    # Parse command-line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--pred_data_dir",
                         default=None,
@@ -391,29 +407,50 @@ def main():
                         help="The pred data dir.")
     args = parser.parse_args()
 
-
+    # Initialize an ordered dictionary to store evaluation results
     result = collections.OrderedDict()
+
+    # Initialize lists to store file paths and task names
     list_of_files = []
     task_name_list = []
+
+    # Check if the prediction data directory ends with ".txt"
     if args.pred_data_dir.endswith(".txt"):
+        # If it's a single file, append it to the list of files
         list_of_files.append(args.pred_data_dir)
+        # Extract the task name from the file path
         task_name_list.append(args.pred_data_dir.split("/")[-3]+"_"+"_".join(args.pred_data_dir.split("/")[-2].split("_")[0:2]))
     else:
+        # If it's a directory, loop through each file in the directory
         for folder in glob.glob(os.path.join(args.pred_data_dir, "*")):
+            # Construct the file path for each file
             file_path = folder + "/" + "test_ep_" + str(float(folder.split("_")[-3])).split('.')[0] + ".txt"
+            # Replace backslashes with forward slashes for compatibility
             file_path = file_path.replace("\\","/")
+            # Append the file path to the list of files
             list_of_files.append(file_path)
+            # Extract the task name from the file path
             task_name_list.append(file_path.split("/")[-3] + "_" + "_".join(file_path.split("/")[-2].split("_")[0:2]))
 
-
+    # Iterate through each file in the list of files
     for i in range(len(list_of_files)):
+        # Extract the test name from the file path
         test_name = list_of_files[i].split("/")[-2]
+
+        # Check if the task name belongs to Sentihood dataset
         if task_name_list[i] in ["sentihood_single", "sentihood_NLI_M", "sentihood_QA_M", "sentihood_NLI_B", "sentihood_QA_B"]:
+            # Get the true labels for the task
             y_true = get_y_true(task_name_list[i])
+            # Get the predicted labels and scores for the task
             y_pred, score = get_y_pred(task_name_list[i], list_of_files[i])
+            # Calculate aspect strict accuracy for the task
             aspect_strict_Acc = sentihood_strict_acc(y_true, y_pred)
+            # Calculate aspect Macro-F1 score for the task
             aspect_Macro_F1 = sentihood_macro_F1(y_true, y_pred)
+            # Calculate aspect Macro-AUC and sentiment accuracy for the task
             aspect_Macro_AUC, sentiment_Acc, sentiment_Macro_AUC = sentihood_AUC_Acc(y_true, score)
+
+            # Store the evaluation results in the ordered dictionary
             result[test_name] = {'aspect_strict_Acc': aspect_strict_Acc,
                     'aspect_Macro_F1': aspect_Macro_F1,
                     'aspect_Macro_AUC': aspect_Macro_AUC,
@@ -421,12 +458,18 @@ def main():
                     'sentiment_Macro_AUC': sentiment_Macro_AUC}
 
         else:
+            # Get the true labels for the task
             y_true = get_y_true(task_name_list[i])
+            # Get the predicted labels and scores for the task
             y_pred, score = get_y_pred(task_name_list[i], list_of_files[i])
+            # Calculate aspect Precision, Recall, and F1-score for the task
             aspect_P, aspect_R, aspect_F = semeval_PRF(y_true, y_pred)
+            # Calculate sentiment accuracy for different class settings for the task
             sentiment_Acc_4_classes = semeval_Acc(y_true, y_pred, score, 4)
             sentiment_Acc_3_classes = semeval_Acc(y_true, y_pred, score, 3)
             sentiment_Acc_2_classes = semeval_Acc(y_true, y_pred, score, 2)
+
+            # Store the evaluation results in the ordered dictionary
             result[test_name] = {'aspect_P': aspect_P,
                     'aspect_R': aspect_R,
                     'aspect_F': aspect_F,
@@ -434,6 +477,7 @@ def main():
                     'sentiment_Acc_3_classes': sentiment_Acc_3_classes,
                     'sentiment_Acc_2_classes': sentiment_Acc_2_classes}
 
+    # Print the evaluation results
     for key in result.keys():
         print(key)
         for sub_key, sub_value in result[key].items():

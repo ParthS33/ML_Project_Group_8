@@ -1,6 +1,6 @@
-# coding=utf-8
+"""
 
-# Reference: https://github.com/huggingface/pytorch-pretrained-BERT
+"""
 
 """Convert BERT checkpoint."""
 
@@ -46,20 +46,24 @@ def convert():
     path = args.tf_checkpoint_path
     print("Converting TensorFlow checkpoint from {}".format(path))
 
+    # List all variables in the TensorFlow checkpoint
     init_vars = tf.train.list_variables(path)
     names = []
     arrays = []
     for name, shape in init_vars:
         print("Loading {} with shape {}".format(name, shape))
+        # Load variable from TensorFlow checkpoint as a NumPy array
         array = tf.train.load_variable(path, name)
         print("Numpy array shape {}".format(array.shape))
         names.append(name)
         arrays.append(array)
 
+    # Load NumPy arrays into the PyTorch model
     for name, array in zip(names, arrays):
-        name = name[5:]  # skip "bert/"
+        name = name[5:]
         print("Loading {}".format(name))
         name = name.split('/')
+        # Skip certain variables
         if any(n in ["adam_v", "adam_m","l_step"] for n in name):
             print("Skipping {}".format("/".join(name)))
             continue
@@ -67,6 +71,8 @@ def convert():
             print("Skipping")
             continue
         pointer = model
+
+        # Traverse the model to find the appropriate parameter
         for m_name in name:
             if re.fullmatch(r'[A-Za-z]+_\d+', m_name):
                 l = re.split(r'_(\d+)', m_name)
@@ -83,6 +89,8 @@ def convert():
             pointer = getattr(pointer, 'weight')
         elif m_name == 'kernel':
             array = np.transpose(array)
+
+        # Assign NumPy array to PyTorch tensor
         try:
             assert pointer.shape == array.shape
         except AssertionError as e:
