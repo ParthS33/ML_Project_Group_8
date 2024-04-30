@@ -1,0 +1,63 @@
+OG NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+OG NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+OG QA_M:
+python run_classifier_TABSA.py --task_name sentihood_QA_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/QA_M --seed 42 --do_save_model
+
+OG QA_B:
+python run_classifier_TABSA.py --task_name sentihood_QA_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/QA_B --seed 42 --do_save_model
+
+
+New script 1 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 256 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+NEw script 1 NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 256 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+New Script 2 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 256 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+
+NewbScript 2 NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 256 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+
+New Script 3 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+
+NewbScript 3 NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+
+
+New Script 4 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 3e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+
+
+NewbScript 4 NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 3e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+
+
+New Script 5 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+
+
+NewbScript 5 NLI_B:
+python run_classifier_TABSA.py --task_name sentihood_NLI_B --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 20 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_B --seed 42 --do_save_model
+
+
+
+New Script 6 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 128 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 4.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
+
+
+
+New Script 7 NLI_M:
+python run_classifier_TABSA.py --task_name sentihood_NLI_M --data_dir data/sentihood/bert-pair/ --vocab_file uncased_L-12_H-768_A-12/vocab.txt --bert_config_file uncased_L-12_H-768_A-12/bert_config.json --init_checkpoint uncased_L-12_H-768_A-12/pytorch_model.bin --eval_test --do_lower_case --max_seq_length 300 --train_batch_size 24 --learning_rate 2e-5 --num_train_epochs 5.0 --output_dir results/sentihood/NLI_M --seed 42 --do_save_model
